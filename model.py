@@ -116,7 +116,7 @@ def augment_images(images, measurements):
         augmented_measurements.append(measurement)
         augmented_images.append(cv2.flip(image, 1)) #flip image
         augmented_measurements.append(measurement * -1.0) #invert value
-    return (augment_images, augmented_measurements)
+    return augmented_images, augmented_measurements
 
 with open('../simulator/data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
@@ -135,8 +135,16 @@ for line in lines:
     measurement = float(line[3])
     measurements.append(measurement)
 
+aug_data_images, aug_data_measure = augment_images(images, measurements)
+
+# images.concat(aug_data_images)
+# measurements.concat(aug_date_measure)
+
 X_train = np.array(images)
 y_train = np.array(measurements)
+
+# X_train = np.append(images, aug_data_images)
+# y_train = np.append(measurements, aug_data_measure)
 
 returned_model = model_create()
 
