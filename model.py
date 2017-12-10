@@ -3,11 +3,35 @@ import cv2
 import numpy as np
 
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Dropout
+from keras.layers import Flatten, Dense, Lambda, Dropout, Cropping2D
 from keras.layers.convolutional import Convolution2D, Conv2D
 from keras.layers.pooling import MaxPooling2D
 
 lines = []
+
+#NVIDIA
+def create_model_6():
+    model = Sequential()
+    #normalize and mean centering
+    #initial image is 160 x 320 x 3
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+    #crop image: 70 from the top and 25 from the bottom, 0 from the left and 0 from the right
+    model.add(Cropping2D(cropping=((70, 25), (0, 0))))
+    model.add(Convolution2D(24,5,5, subsample=(2, 2), activation='relu'))
+    model.add(Convolution2D(36,5,5, subsample=(2, 2), activation='relu'))
+    model.add(Convolution2D(48,5,5, subsample=(2, 2), activation='relu'))
+    model.add(Convolution2D(64,3,3, activation='relu'))
+    model.add(Convolution2D(64,3,3, activation='relu'))
+    # model.add(MaxPooling2D())
+    # model.add(Convolution2D(6,5,5,activation='relu'))
+    # model.add(MaxPooling2D())
+    model.add(Flatten())
+    model.add(Dense(100))
+    model.add(Dense(50))
+    model.add(Dense(10))
+    model.add(Dense(1))
+    return model
+    
 
 def create_model_5():
     model = Sequential()
@@ -44,7 +68,10 @@ def create_model_4():
 def create_model_3():
     model = Sequential()
     #normalize and mean centering
+    #initial image is 160 x 320 x 3
     model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+    #crop image: 70 from the top and 25 from the bottom, 0 from the left and 0 from the right
+    model.add(Cropping2D(cropping=((70, 25), (0, 0))))
     model.add(Convolution2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     model.add(Convolution2D(6,5,5,activation='relu'))
@@ -70,13 +97,25 @@ def create_model_1():
     model.add(Dense(1))
     return model
 
+model_create = create_model_6
+model_name = 'model_6_'
+#test to see if model bombs - see error message 
 try:
-    create_model_3()
+    model_create()
 except Exception as inst:
     print(type(inst))    # the exception instance
     print(inst.args)     # arguments stored in .args
     print(inst)          # __str__ allows args to be printed directly,
                          # but may be overridden in exception subclasses
+
+def augment_images(images, measurements):
+    augmented_images, augmented_measurements = [], []
+    for image, measurement in zip(images, measurements):
+        augmented_images.append(image)
+        augmented_measurements.append(measurement)
+        augmented_images.append(cv2.flip(image, 1)) #flip image
+        augmented_measurements.append(measurement * -1.0) #invert value
+    return (augment_images, augmented_measurements)
 
 with open('../simulator/data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
@@ -98,12 +137,14 @@ for line in lines:
 X_train = np.array(images)
 y_train = np.array(measurements)
 
-returned_model = create_model_3()
+returned_model = model_create()
 
 returned_model.compile(loss='mse', optimizer='adam')
-returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=10,verbose=1)
+history = returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=10,verbose=2)
 
-returned_model.save('test_model.h5')
+
+returned_model.save(model_name + '.h5')
+#returned_model.save('test_model.h5')
 
 
 
