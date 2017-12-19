@@ -137,6 +137,10 @@ for line in lines:
 
 aug_data_images, aug_data_measure = augment_images(images, measurements)
 
+for image, measurement in zip(aug_data_images, aug_data_measure):
+    images.append(image)
+    measurements.append(measurement)
+
 # images.concat(aug_data_images)
 # measurements.concat(aug_date_measure)
 
