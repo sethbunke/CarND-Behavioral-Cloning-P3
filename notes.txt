@@ -1,0 +1,4 @@
+source activate carnd-term1
+
+python drive.py model_6_.h5
+
