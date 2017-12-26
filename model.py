@@ -118,7 +118,15 @@ def augment_images(images, measurements):
         augmented_measurements.append(measurement * -1.0) #invert value
     return augmented_images, augmented_measurements
 
-with open('../simulator/data/driving_log.csv') as csvfile:
+#data_version = ''
+#csv_file_name = '../simulator/data/driving_log.csv'
+#img_file_path = '../simulator/data/IMG/'
+
+data_version = '1'
+csv_file_name = '../simulator/data1/driving_log.csv'
+img_file_path = '../simulator/data1/IMG/'
+
+with open(csv_file_name) as csvfile:
     reader = csv.reader(csvfile)
     next(reader)
     for line in reader:
@@ -129,7 +137,7 @@ measurements = []
 for line in lines:
     source_path = line[0]
     filename = source_path.split('/')[-1]
-    current_path = '../simulator/data/IMG/' + filename
+    current_path = img_file_path + filename
     image = cv2.imread(current_path)
     images.append(image)
     measurement = float(line[3])
@@ -150,13 +158,15 @@ y_train = np.array(measurements)
 # X_train = np.append(images, aug_data_images)
 # y_train = np.append(measurements, aug_data_measure)
 
+number_of_epochs = 10
+
 returned_model = model_create()
 
 returned_model.compile(loss='mse', optimizer='adam')
-history = returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=5,verbose=2)
+history = returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=number_of_epochs,verbose=2)
 
 
-returned_model.save(model_name + '.h5')
+returned_model.save(model_name + data_version + '.h5')
 #returned_model.save('test_model.h5')
 
 def show_history(history_object):
