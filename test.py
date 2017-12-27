@@ -34,7 +34,7 @@ def get_images_and_measurements(inner_line, steering_correction):
     inner_measurements = []
 
     for index in range(0,3):                
-        steering_angle = float(line[3])        
+        steering_angle = float(inner_line[3])        
         #left image
         if index == 1:            
             steering_angle = steering_angle + steering_correction
