@@ -38,9 +38,9 @@ def create_model_6():
 model_create = create_model_6
 model_name = 'model_6_'
 
-data_version = ''
-csv_file_name = '../simulator/data/driving_log.csv'
-img_file_path = '../simulator/data/IMG/'
+data_version = '2'
+csv_file_name = '../simulator/data2/driving_log.csv'
+img_file_path = '../simulator/data2/IMG/'
 
 with open(csv_file_name) as csvfile:
     reader = csv.reader(csvfile)
