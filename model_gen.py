@@ -28,19 +28,21 @@ def create_model_6():
     # model.add(MaxPooling2D())
     # model.add(Convolution2D(6,5,5,activation='relu'))
     # model.add(MaxPooling2D())
-    model.add(Flatten())
+    model.add(Dropout(.2))
+    model.add(Flatten())  
     model.add(Dense(100))
     model.add(Dense(50))
     model.add(Dense(10))
     model.add(Dense(1))
     return model
+
     
 model_create = create_model_6
 model_name = 'model_6_'
 
-data_version = '2'
-csv_file_name = '../simulator/data2/driving_log.csv'
-img_file_path = '../simulator/data2/IMG/'
+data_version = ''
+csv_file_name = '../simulator/data/driving_log.csv'
+img_file_path = '../simulator/data/IMG/'
 
 with open(csv_file_name) as csvfile:
     reader = csv.reader(csvfile)
@@ -49,7 +51,7 @@ with open(csv_file_name) as csvfile:
         samples.append(line)
 
 
-
+#Get left and right images with the corresponding steeting angle corrections
 def get_images_and_measurements(inner_line, steering_correction):
     inner_images = []
     inner_measurements = []
@@ -99,7 +101,6 @@ def generator(samples, batch_size=32):
                 # images.append(center_image)
                 # angles.append(center_angle)
 
-            # trim image to only see section with road
             X_train = np.array(images)
             y_train = np.array(angles)
             yield shuffle(X_train, y_train)
@@ -122,7 +123,7 @@ history = returned_model.fit_generator(train_generator, samples_per_epoch=sample
 # history = returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=number_of_epochs,verbose=2)
 
 
-returned_model.save('X-5e-' + model_name + data_version + '.h5')
+returned_model.save(model_name + '_' + data_version + '_' + str(nb_epoch) + '.h5')
 #returned_model.save('test_model.h5')
 
 def show_history(history_object):
