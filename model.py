@@ -38,7 +38,7 @@ def create_model_6():
 
     
 model_create = create_model_6
-model_name = 'model_6_'
+model_name = 'model'
 
 data_version = ''
 csv_file_name = '../simulator/data/driving_log.csv'
@@ -118,13 +118,7 @@ nb_epoch = 5
 returned_model.compile(loss='mse', optimizer='adam')
 history = returned_model.fit_generator(train_generator, samples_per_epoch=samples_per_epoch, validation_data=validation_generator, nb_val_samples=nb_val_samples, nb_epoch=nb_epoch, verbose=2)
 
-
-# returned_model.compile(loss='mse', optimizer='adam')
-# history = returned_model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=number_of_epochs,verbose=2)
-
-
-returned_model.save(model_name + '_' + data_version + '_' + str(nb_epoch) + '.h5')
-#returned_model.save('test_model.h5')
+returned_model.save(model_name + '.h5')
 
 def show_history(history_object):
     ### print the keys contained in the history object
