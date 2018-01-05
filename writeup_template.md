@@ -26,6 +26,13 @@ The goals / steps of this project are the following:
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
 
+[valid1]: ./images/valid1.png 
+[valid2]: ./images/valid2.png 
+[valid3]: ./images/valid3.png 
+[valid4]: ./images/valid4.png 
+[valid5]: ./images/valid5.png 
+[valid6]: ./images/valid6.png 
+
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
@@ -54,15 +61,35 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+1. Input image size was 160x320x3
+2. Lambda layer for normalising the image to be floats centered around 0.
+3. A cropping layer to remove the top 70 pixels from the top and 25 pixels from the hood.
+4. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 24 with a relu activation
+5. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 36 with a relu activation
+6. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 48 with a relu activation
+7. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
+8. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
+9. 20% dropout
+10. Fully connected layer with 100 nodes
+11. Fully connected layer with 50 nodes
+12. Fully connected layer with 10 nodes
+13. Fully connected layer with 1 node which predicts the steering angle.
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting (model.py lines 31). 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 40-45). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+
+Additionally, multiple datasets and models were used and tested to determine their accuacy and whether or not they were overfitting on the training set by visually examining the mean squared error. 
+
+ ![alt text][image1]
+ ![alt text][image2]
+ ![alt text][image3]
+ ![alt text][image4]
+ ![alt text][image5]
+ ![alt text][image6]
 
 #### 3. Model parameter tuning
 
