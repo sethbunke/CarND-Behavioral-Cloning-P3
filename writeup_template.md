@@ -84,12 +84,12 @@ The model was trained and validated on different data sets to ensure that the mo
 
 Additionally, multiple datasets and models were used and tested to determine their accuacy and whether or not they were overfitting on the training set by visually examining the mean squared error. 
 
- ![alt text][image1]
- ![alt text][image2]
- ![alt text][image3]
- ![alt text][image4]
- ![alt text][image5]
- ![alt text][image6]
+ ![alt text][valid1]
+ ![alt text][valid2]
+ ![alt text][valid3]
+ ![alt text][valid4]
+ ![alt text][valid5]
+ ![alt text][valid6]
 
 #### 3. Model parameter tuning
 
