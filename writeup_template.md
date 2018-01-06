@@ -115,9 +115,17 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 #### 2. Final Model Architecture
 
-See "1. An appropriate model architecture has been employed" section above. 
+See "1. An appropriate model architecture has been employed" section above.
 
 #### 3. Creation of the Training Set & Training Process
+
+I recorded approximately 2.5 laps on track one using center lane driving, then another lap going in the opposite direction, and added recover maneuvers. Additionally, for performance/memory managment reasons my code uses a generator (lines 85 - 106) which provides to the model left, center, and right images withe appropriate steering angle as well as a "flipped" versions of all of these images (lines 55 - 80). 
+
+All samples read from the CSV file are shuffled before batches are created and the images are retrieved and the steering angles are calculated. 
+
+Validation sets are established via the use of train_test_split (line 83) with 20% going to the validation set. These sets are passed to the generator mentioned above. 
+
+The number of epochs and batch sizes were "tuned" to determine the optimal combination (lines 114 - 116). The accuracy was verified by viewing the graphed "history objects" (lines 123-136) that were returned from the fit_generator function (line 119).
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
