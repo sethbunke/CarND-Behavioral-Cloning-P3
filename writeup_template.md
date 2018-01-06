@@ -61,20 +61,7 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-
-1. Input image size was 160x320x3
-2. Lambda layer for normalising the image to be floats centered around 0.
-3. A cropping layer to remove the top 70 pixels from the top and 25 pixels from the hood.
-4. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 24 with a relu activation
-5. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 36 with a relu activation
-6. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 48 with a relu activation
-7. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
-8. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
-9. 20% dropout
-10. Fully connected layer with 100 nodes
-11. Fully connected layer with 50 nodes
-12. Fully connected layer with 10 nodes
-13. Fully connected layer with 1 node which predicts the steering angle.
+See "Final Model Architecture" section below. 
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -115,7 +102,19 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 #### 2. Final Model Architecture
 
-See "1. An appropriate model architecture has been employed" section above.
+1. Input image size was 160x320x3
+2. Lambda layer for normalising the image to be floats centered around 0.
+3. A cropping layer to remove the top 70 pixels from the top and 25 pixels from the hood.
+4. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 24 with a relu activation
+5. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 36 with a relu activation
+6. Convolution layer with kernel size of 5x5 and stride 2x2 and depth 48 with a relu activation
+7. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
+8. Convolution layer with kernel size of 3x3 and stride 1x1 and depth 64 with a relu activation
+9. 20% dropout
+10. Fully connected layer with 100 nodes
+11. Fully connected layer with 50 nodes
+12. Fully connected layer with 10 nodes
+13. Fully connected layer with 1 node which predicts the steering angle.
 
 #### 3. Creation of the Training Set & Training Process
 
@@ -127,28 +126,3 @@ Validation sets are established via the use of train_test_split (line 83) with 2
 
 The number of epochs and batch sizes were "tuned" to determine the optimal combination (lines 114 - 116). The accuracy was verified by viewing the graphed "history objects" (lines 123-136) that were returned from the fit_generator function (line 119).
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
-
-![alt text][image2]
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
-
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
